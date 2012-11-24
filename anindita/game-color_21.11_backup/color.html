@@ -1,0 +1,121 @@
+<!doctype html>
+ 
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>GAME</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/resources/demos/style.css" />
+    <style>
+    #red, #green, #blue {
+        float: left;
+        clear: left;
+        width: 466px;
+        margin: 15px;
+		background: url(slideBg.png) 0 100% no-repeat 
+    }
+    #swatch {
+        width: 937px;
+        height: 403px;
+       
+		background:url(actual2.png) 0 100% no-repeat;
+		opacity:0.5;
+		filter:alpha(opacity=50); /* For IE8 and earlier */
+       
+    }
+    #red .ui-slider-range {background: url(slideBg.png) 0 100% no-repeat  }
+    #red .ui-slider-handle { border-color: #ef2929; }
+    #green .ui-slider-range { background: #8ae234; }
+    #green .ui-slider-handle { border-color: #8ae234; }
+    #blue .ui-slider-range { background: #729fcf; }
+    #blue .ui-slider-handle { border-color: #729fcf; }
+	.test{
+		width: 937px;
+        height: 403px;
+        
+	background:url(test.png) 0 0px no-repeat;	
+	}
+    </style>
+    <script>
+    function hexFromRGB(r, g, b) {
+        var hex = [
+            r.toString( 16 ),
+            g.toString( 16 ),
+            b.toString( 16 )
+        ];
+        $.each( hex, function( nr, val ) {
+            if ( val.length === 1 ) {
+                hex[ nr ] = "0" + val;
+            }
+        });
+        return hex.join( "" ).toUpperCase();
+    }
+    function refreshSwatch(event, ui) {
+		var greenValue1 = 233;
+		 /*$( "#amount" ).val( "" + ui.value );*/
+		if($( "#red" ).slider( "value" )<=233){
+			var blueValue =$( "#red" ).slider( "value" );
+			greenValue = greenValue1;
+			}
+		else if($( "#red" ).slider( "value" )>233 || $( "#red" ).slider( "value" )<375){
+			
+			var blueValue =233;
+			var correctValue;
+			greenValue = (375-$( "#red" ).slider( "value" ))+91;
+			
+			/*if(greenValue==203){
+				correctValue=$( "#red" ).slider( "value" )-163;
+				 $( "#amount" ).val( "" + correctValue );	
+			}*/
+			
+			}
+		/*var x=ui.value;
+			if(x<263){
+				x=x-99;
+				x=x*.9;
+				$( "#amount" ).val( "" + x );
+			}
+		*/
+        var red = 2,
+            green = greenValue,			
+            blue = blueValue,
+            hex = hexFromRGB( red, green, blue );
+		//alert($( "#red" ).slider( "value" ));
+        $( "#swatch" ).css( "background-color", "#" + hex );
+    }
+    $(function() {
+        $( "#red" ).slider({
+            orientation: "horizontal",
+            range: "min",
+			min:99,
+            max: 375,
+            //value: 99,
+           	slide: refreshSwatch,
+            change: refreshSwatch
+        });
+        $( "#red" ).slider( "value", 0 );
+       
+    });
+    </script>
+</head>
+<body class="ui-widget-content" style="border: 0;">
+ 
+<p class="ui-state-default ui-corner-all ui-helper-clearfix" style="padding: 4px;">
+    <span class="ui-icon ui-icon-pencil" style="float: left; margin: -2px 5px 0 0;"></span>
+    game
+    </p>
+ <!--<p>
+                    <label for="amount">Maximum point:</label>
+                    <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+</p>-->
+<div id="red"></div>
+<!--<div id="green"></div>
+<div id="blue"></div>-->
+<div class="wrapper" style="width:937px; margin:0px auto; border:1px solid black; margin-top:80px;" >
+<div class="test"><div id="swatch" class="ui-widget-content ui-corner-all"></div></div>
+ </div>
+ 
+</body>
+</html>
